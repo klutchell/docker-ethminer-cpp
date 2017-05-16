@@ -1,4 +1,4 @@
-# forked from https://github.com/ethereum/cpp-ethereum/blob/develop/scripts/docker/eth-alpine/Dockerfile for miner support
+# forked from https://github.com/ethereum/cpp-ethereum/blob/develop/scripts/Dockerfile for miner support
 
 FROM	alpine
 
