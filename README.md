@@ -1,10 +1,10 @@
-# ethminer-cpp docker image #
+# ethminer-cpp docker image
 
-## Description ##
+## Description
 
-forked from https://github.com/ethereum/cpp-ethereum/blob/develop/scripts/docker/eth-alpine/Dockerfile for miner support
+forked from https://github.com/ethereum/cpp-ethereum/blob/develop/scripts/Dockerfile for miner support
 
-## Usage ##
+## Usage
 ```bash
 $ docker run -it --rm \
 --name ethminer-cpp \
@@ -18,7 +18,7 @@ $ docker run -it --rm \
 ethminer-cpp <options>
 ```
 
-### Example: cpu nanopool ###
+### Example: cpu nanopool
 ```bash
 $ docker run -it --rm \
 --name ethminer-cpp \
@@ -32,7 +32,7 @@ $ docker run -it --rm \
 ethminer-cpp --cpu --farm-recheck 200 -F http://eth-us-east1.nanopool.org:8888/0xde3a9EDfe3b285659Ae594F00Bfd2EB783D1443c
 ```
 
-### Example: cpu minergate ###
+### Example: cpu minergate
 ```bash
 $ docker run -it --rm \
 --name ethminer-cpp \
@@ -46,10 +46,6 @@ $ docker run -it --rm \
 ethminer-cpp -C -F http://eth.pool.minergate.com:55751/kylemharding@gmail.com --disable-submit-hashrate
 ```
 
-## Author ##
-
-Kyle Harding <kylemharding@gmail.com>
-
-## Sources ##
+## Sources
 
 * https://github.com/ethereum/cpp-ethereum
