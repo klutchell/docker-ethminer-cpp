@@ -1,0 +1,2 @@
+0 2	* * *	ubuntu	/usr/local/bin/docker-ethminer start
+0 8	* * *	ubuntu	/usr/local/bin/docker-ethminer stop

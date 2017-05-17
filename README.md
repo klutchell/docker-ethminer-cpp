@@ -39,7 +39,7 @@ $ docker run -it --rm \
 klutchell/ethminer-cpp <options>
 ```
 
-For convenience, you can create the file /usr/local/bin/docker-ethminer with the following content:
+For convenience, you can create the file /usr/local/bin/docker-ethminer with something similar to the following:
 ```bash
 #!/usr/bin/env bash
 
@@ -69,6 +69,12 @@ klutchell/ethminer-cpp -C -F http://eth.pool.minergate.com:55751/kylemharding@gm
 }
 
 eval $1
+```
+
+You can schedule the above init script by creating /etc/cron.d/docker-ethminer with something similar to the following:
+```bash
+0 2     * * *   ubuntu  /usr/local/bin/docker-ethminer start
+0 8     * * *   ubuntu  /usr/local/bin/docker-ethminer stop
 ```
 
 ## Sources
