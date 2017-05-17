@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+echo "running as user/group $(id -u):$(id -g)"
+
+stop()
+{
+	echo "stopping any ethminer containers..."
+	docker stop "$(docker ps -a --filter="name=ethminer" -q)" || true
+}
+
+start()
+{
+	stop
+	mkdir ~/.ethereum ~/.ethash ~/.web3 2>/dev/null || true
+	echo "starting ethminer container..."
+	docker run -d --rm \
+--name ethminer-cpp \
+-p 127.0.0.1:8545:8545 \
+-p 0.0.0.0:30303:30303 \
+-v ~/.ethereum:/.ethereum \
+-v ~/.ethash:/.ethash \
+-v ~/.web3:/.web3 \
+-e HOME=/ \
+--user $(id -u):$(id -g) \
+klutchell/ethminer-cpp -C -F http://eth.pool.minergate.com:55751/kylemharding@gmail.com --disable-submit-hashrate
+}
+
+eval $1
