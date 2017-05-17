@@ -77,6 +77,11 @@ You can schedule the above init script by creating `/etc/cron.d/docker-ethminer`
 0 8     * * *   ubuntu  /usr/local/bin/docker-ethminer stop
 ```
 
+If running in detached mode, you can view the logs with the following command:
+```bash
+$ docker logs -t ethminer-cpp
+```
+
 ## Sources
 
 * https://github.com/ethereum/cpp-ethereum
