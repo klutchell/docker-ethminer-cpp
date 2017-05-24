@@ -13,7 +13,7 @@ start()
 	stop
 	mkdir ~/.ethereum ~/.ethash ~/.web3 2>/dev/null || true
 	echo "starting ethminer container..."
-	docker run -d --rm \
+	docker run -d \
 	--name ethminer-cpp \
 	--restart always \
 	-p 127.0.0.1:8545:8545 \
