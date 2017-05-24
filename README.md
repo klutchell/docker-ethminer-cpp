@@ -57,15 +57,16 @@ start()
 	mkdir ~/.ethereum ~/.ethash ~/.web3 2>/dev/null || true
 	echo "starting ethminer container..."
 	docker run -d --rm \
---name ethminer-cpp \
--p 127.0.0.1:8545:8545 \
--p 0.0.0.0:30303:30303 \
--v ~/.ethereum:/.ethereum \
--v ~/.ethash:/.ethash \
--v ~/.web3:/.web3 \
--e HOME=/ \
---user $(id -u):$(id -g) \
-klutchell/ethminer-cpp -C -F http://eth.pool.minergate.com:55751/kylemharding@gmail.com --disable-submit-hashrate
+	--name ethminer-cpp \
+	--restart always \
+	-p 127.0.0.1:8545:8545 \
+	-p 0.0.0.0:30303:30303 \
+	-v ~/.ethereum:/.ethereum \
+	-v ~/.ethash:/.ethash \
+	-v ~/.web3:/.web3 \
+	-e HOME=/ \
+	--user $(id -u):$(id -g) \
+	klutchell/ethminer-cpp -C -F http://eth.pool.minergate.com:55751/kylemharding@gmail.com --disable-submit-hashrate
 }
 
 eval $1
