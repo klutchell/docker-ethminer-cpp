@@ -18,7 +18,7 @@ These images also include `eth` so they could be run as a client/wallet, but for
 |`alpine`|latest alpine base image and cpp-ethereum development source|
 |`ubuntu`|latest ubuntu base image and cpp-ethereum development source|
 
-## Usage
+## Basic Usage
 
 Create some local directories for ethereum data so a new DAG isn't required on every start (optional).
 ```bash
@@ -39,60 +39,56 @@ $ docker run -it --rm \
 klutchell/ethminer-cpp <options>
 ```
 
-For convenience, you can create the file `/usr/local/bin/docker-ethminer` with something similar to the following:
-```bash
-#!/usr/bin/env bash
-
-echo "running as user/group $(id -u):$(id -g)"
-
-stop()
-{
-	echo "stopping ethminer container..."
-	docker stop "$(docker ps --filter="name=ethminer" -q)" || true
-}
-
-start()
-{
-	echo "starting ethminer container..."
-	docker start "$(docker ps -a --filter="name=ethminer" -q)"
-}
-
-remove()
-{
-	echo "removing ethminer container..."
-	docker rm -fv "$(docker ps -a --filter="name=ethminer" -q)" || true
-}
-
-create()
-{
-	remove
-	mkdir ~/.ethereum ~/.ethash ~/.web3 2>/dev/null || true
-	echo "creating ethminer container..."
-	docker create \
-	--name ethminer-cpp \
-	--restart unless-stopped \
-	-p 127.0.0.1:8545:8545 \
-	-p 0.0.0.0:30303:30303 \
-	-v ~/.ethereum:/.ethereum \
-	-v ~/.ethash:/.ethash \
-	-v ~/.web3:/.web3 \
-	-e HOME=/ \
-	--user $(id -u):$(id -g) \
-	klutchell/ethminer-cpp -C -F http://eth.pool.minergate.com:55751/kylemharding@gmail.com --disable-submit-hashrate
-}
-
-eval $1
-```
-
-You can schedule the above init script by creating `/etc/cron.d/docker-ethminer` with something similar to the following:
-```bash
-0 2     * * *   ubuntu  /usr/local/bin/docker-ethminer start
-0 8     * * *   ubuntu  /usr/local/bin/docker-ethminer stop
-```
-
 If running in detached mode, you can view the logs with the following command:
 ```bash
 $ docker logs -t ethminer-cpp
+```
+
+## Bash Script
+
+You can optionally also use the provided `bin/docker-ethminer` bash script to
+start/stop the service on a schedule.
+Edit the volume mounts and mining parameters as needed before running the script.
+
+## Docker Stack
+
+You can optionally also use the provided `docker-compose.yml` for running as
+a service either with docker-compose or docker swarm.
+Edit the volume mounts and entrypoint as needed before creating stack.
+
+### Create Stack
+
+Create a new stack with the
+```bash
+$ docker stack deploy --compose-file docker-compose.yml miner
+```
+
+### Update Stack
+
+The same deploy command will pull the latest image and update the container as needed.
+```bash
+$ docker stack deploy --compose-file docker-compose.yml miner
+```
+
+### Remove Stack
+
+This will stop the miner and remove the stack.
+```bash
+$ docker stack rm miner
+```
+
+### Stop Mining
+
+This will stop the ethminer-cpp service.
+```bash
+$ docker service scale miner_ethminer-cpp=0
+```
+
+### Start Mining
+
+This will start the ethminer-cpp service.
+```bash
+$ docker service scale miner_ethminer-cpp=1
 ```
 
 ## Sources

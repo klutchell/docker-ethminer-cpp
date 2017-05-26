@@ -1,2 +1,5 @@
-0 2	* * *	ubuntu	/usr/local/bin/docker-ethminer start
-0 8	* * *	ubuntu	/usr/local/bin/docker-ethminer stop
+# 0 2	* * *	ubuntu	/usr/local/bin/docker-ethminer start
+# 0 8	* * *	ubuntu	/usr/local/bin/docker-ethminer stop
+
+0 2	* * *	ubuntu	/usr/bin/docker service scale miner_ethminer-cpp=1
+0 18	* * *	ubuntu	/usr/bin/docker service scale miner_ethminer-cpp=0

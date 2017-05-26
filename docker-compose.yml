@@ -1,0 +1,21 @@
+version: '3'
+services:
+    ethminer-cpp:
+        # https://github.com/klutchell/docker-ethminer-cpp
+        # https://hub.docker.com/r/klutchell/ethminer-cpp/
+        image: "klutchell/ethminer-cpp"
+        volumes:
+            - /home/ubuntu/.ethereum:/.ethereum
+            - /home/ubuntu/.ethash:/.ethash
+            - /home/ubuntu/.web3:/.web3
+        deploy:
+           restart_policy:
+             condition: any
+             delay: 5s
+             max_attempts: 3
+             window: 120s
+        healthcheck:
+            disable: true
+        environment:
+          - HOME=/
+        entrypoint: /usr/local/bin/ethminer -C -F http://eth.pool.minergate.com:55751/kylemharding@gmail.com --disable-submit-hashrate
