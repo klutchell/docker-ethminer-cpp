@@ -4,6 +4,9 @@ services:
         # https://github.com/klutchell/docker-ethminer-cpp
         # https://hub.docker.com/r/klutchell/ethminer-cpp/
         image: "klutchell/ethminer-cpp"
+        ports:
+            # - "127.0.0.1:8545:8545"
+            - "0.0.0.0:30303:30303"
         volumes:
             - /home/ubuntu/.ethereum:/.ethereum
             - /home/ubuntu/.ethash:/.ethash
