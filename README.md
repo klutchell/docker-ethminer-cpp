@@ -47,16 +47,28 @@ echo "running as user/group $(id -u):$(id -g)"
 
 stop()
 {
-	echo "stopping any ethminer containers..."
-	docker stop "$(docker ps -a --filter="name=ethminer" -q)" || true
+	echo "stopping ethminer container..."
+	docker stop "$(docker ps --filter="name=ethminer" -q)" || true
 }
 
 start()
 {
-	stop
-	mkdir ~/.ethereum ~/.ethash ~/.web3 2>/dev/null || true
 	echo "starting ethminer container..."
-	docker run -d \
+	docker start "$(docker ps -a --filter="name=ethminer" -q)"
+}
+
+remove()
+{
+	echo "removing ethminer container..."
+	docker rm -fv "$(docker ps -a --filter="name=ethminer" -q)" || true
+}
+
+create()
+{
+	remove
+	mkdir ~/.ethereum ~/.ethash ~/.web3 2>/dev/null || true
+	echo "creating ethminer container..."
+	docker create \
 	--name ethminer-cpp \
 	--restart unless-stopped \
 	-p 127.0.0.1:8545:8545 \
