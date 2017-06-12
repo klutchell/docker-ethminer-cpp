@@ -21,4 +21,4 @@ services:
             disable: true
         environment:
           - HOME=/
-        entrypoint: /usr/local/bin/ethminer -C -F http://eth.pool.minergate.com:55751/kylemharding@gmail.com --disable-submit-hashrate
+        entrypoint: /usr/local/bin/ethminer -C -F http://ethereumpool.co/?miner=1@0xde3a9EDfe3b285659Ae594F00Bfd2EB783D1443c@dc19-sb32-668149
